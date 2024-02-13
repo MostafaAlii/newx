@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Frontend\Cms;
-use App\Models\Contact;
+use App\Models\{Contact, Service};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -10,7 +10,8 @@ class ContactController extends Controller {
     public function index() {
         $contact = Contact::first();
         $title = 'ARTISTICRETOUCH.COM';
-        return view('website.pages.contact', ['title' => $title, 'contact' => $contact]);
+        $all_services = Service::latest()->get();
+        return view('website.pages.contact', ['title' => $title, 'contact' => $contact, 'all_services' => $all_services]);
     } 
     
     

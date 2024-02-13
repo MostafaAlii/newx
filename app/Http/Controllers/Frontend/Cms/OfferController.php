@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Frontend\Cms;
-use App\Models\Offer;
+use App\Models\{Offer, Service,Button};
 use App\Http\Controllers\Controller;
-use App\Models\Button;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller {
@@ -11,6 +10,7 @@ class OfferController extends Controller {
         $offers = Offer::get();
         $btn = Button::whereType('offer_contact')->first();
         $title = 'ARTISTICRETOUCH.COM';
-        return view('website.pages.offer', ['title' => $title, 'offers' => $offers, 'btn' => $btn]);
+        $all_services = Service::latest()->get();
+        return view('website.pages.offer', ['title' => $title, 'offers' => $offers, 'btn' => $btn, 'all_services' => $all_services]);
     } 
 }
