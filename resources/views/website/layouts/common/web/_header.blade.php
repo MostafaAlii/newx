@@ -47,7 +47,7 @@
           <a href="{{route('website.prices.index')}}" class="nav_link">Price</a>
           <span class="page_name">Go to price</span>
         </li>
-
+        <!-- Start Services -->
         <li class="nav-item dropdown megamenu-li list-unstyled">
           <a class="nav-link list-unstyled_nav_link dropdown-toggle" href="#" role="button" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Service
@@ -59,18 +59,14 @@
                   <div class="col-sm-6 col-lg-3 service">
                       <div class="serviceBox">
                           <img src="{{$service->ImagePath()}}" alt="{{ $service->name }}" style="width: 100%; max-height:150px;">
-                          <a href="{{$service?->url}}">{{ $service->name }}</a>
+                          <a href="{{route('services.show', ['service' => $service->id])}}">{{ $service->name }}</a>
                       </div>
                   </div>
               @endforeach
             </div>
           </div>
         </li>
-      
-
-        
-
-
+        <!-- End Services -->
         <li class="nav_item {{ request()->routeIs('website.tour.step_one')  ? 'active' : null }}">
           <a href="{{route('website.tour.step_one')}}" class="nav_link">Tour</a>
           <span class="page_name">Go to tour</span>

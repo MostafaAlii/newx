@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend;
+use App\Http\Controllers\{Frontend,Backend};
 use App\Http\Controllers\Frontend\Cms;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +54,10 @@ Route::group(['as' => 'website.'], function () {
             Route::get('step_two', [Cms\TourController::class, 'step_two'])->name('tour.step_two');
             Route::get('step_three', [Cms\TourController::class, 'step_three'])->name('tour.step_three');
             Route::get('video', [Cms\TourController::class, 'video'])->name('tour.video');
+        });
+
+        Route::prefix('service')->group(function () {
+            Route::get('{service}', [Backend\ServicesController::class, 'show'])->name('services.show');
         });
 
         Route::get('faq', [Cms\FaqController::class, 'index'])->name('faq');
