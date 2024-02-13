@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 class RetouchingStyleController extends Controller {
     public function index() {
         $saveRetouchStyle = Retouch::where('user_id', get_user_data()->id)->first();
-        return view('website.dashboard.retouchingStyle', compact('saveRetouchStyle'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.retouchingStyle', compact('saveRetouchStyle', 'all_services'));
     }
 
     public function save(Request $request) {

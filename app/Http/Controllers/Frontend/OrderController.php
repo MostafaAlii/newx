@@ -35,7 +35,8 @@ class OrderController extends Controller
         ]);
         $services = OrderService::active()->select('id', 'name', 'price')->get();
         $payment_btn = Button::whereType('payment')->get();
-        return view('website.dashboard.order', compact('order', 'services', 'payment_btn'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.order', compact('order', 'services', 'payment_btn', 'all_services'));
     }
 
     public function show($id)
@@ -51,7 +52,8 @@ class OrderController extends Controller
         $totalCost = collect($selectedServices)->sum('serviceTotalCost');
         $orderServiceTimes = OrderServiceTime::active()->latest()->get(['id', 'name', 'notes', 'price']);
         $payment_btn = Button::whereStatus(true)->whereType('payment')->get();
-        return view('website.dashboard.orderShow', compact('order', 'services', 'selectedServices', 'orderServiceTimes', 'totalCost', 'payment_btn'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.orderShow', compact('all_services', 'order', 'services', 'selectedServices', 'orderServiceTimes', 'totalCost', 'payment_btn'));
     }
 
     public function update(Request $request, $id)

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use ZipArchive;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{FreeOrder, FreeOrderServiceNote, FreeOrderDetails,OrderService, ImgExtension,FreeServiceImage};
+use App\Models\{Service, FreeOrder, FreeOrderServiceNote, FreeOrderDetails,OrderService, ImgExtension,FreeServiceImage};
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File as FacadesFile;
 class FreeOrderController extends Controller
@@ -18,7 +18,8 @@ class FreeOrderController extends Controller
             'slug' => mt_rand(1000000, 9999999),
             'order_service_id' => $service->id,
         ]);
-        return view('website.dashboard.freeOrder.order', compact('order'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.freeOrder.order', compact('order', 'all_services'));
     }
     
     public function update(Request $request, $id) {
@@ -37,7 +38,8 @@ class FreeOrderController extends Controller
         $order = FreeOrder::findOrFail($id);
         $services = OrderService::active()->select('id', 'name', 'price')->get();
         $selectedServices = $services->whereIn('id', $order->order_service_id)->all();
-        return view('website.dashboard.freeOrder.orderShow', compact('order', 'services', 'selectedServices'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.freeOrder.orderShow', compact('order', 'services', 'selectedServices', 'all_services'));
     }
 
     public function newUpdate(Request $request, $id) {
