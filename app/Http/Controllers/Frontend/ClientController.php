@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -14,7 +15,8 @@ class ClientController extends Controller
     public function index()
     {
         $data = Order::where('user_id',get_user_data()->id)->with('orderDetails')->orderBy('created_at', 'desc')->get();
-        return view('website.dashboard.index', compact('data'));
+        $all_services = Service::latest()->get();
+        return view('website.dashboard.index', compact('data', 'all_services'));
     }
 
     public function retouchingStyle()
@@ -25,8 +27,9 @@ class ClientController extends Controller
     public function editProfile()
     {
         $data = User::where('type', 'user')->where('id', auth()->id())->first();
+        $all_services = Service::latest()->get();
         if ($data) {
-            return view('website.auth.edit', compact('data'));
+            return view('website.auth.edit', compact('data', 'all_services'));
         }
         abort(404);
     }
@@ -40,7 +43,6 @@ class ClientController extends Controller
             'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,'. $request->id],
             'password' => ['sometimes', 'confirmed'],
         ]);
-
         $data = User::findorfail($request->id);
         $data->update([
             'name' => $request->name,

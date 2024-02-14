@@ -59,7 +59,7 @@
                   <div class="col-sm-6 col-lg-3 service">
                       <div class="serviceBox">
                           <img src="{{$service->ImagePath()}}" alt="{{ $service->name }}" style="width: 100%; max-height:150px;">
-                          <a href="{{$service?->url}}">{{ $service->name }}</a>
+                          <a href="{{route('website.all_services.show', ['service' => $service->id])}}">{{ $service->name }}</a>
                       </div>
                   </div>
               @endforeach

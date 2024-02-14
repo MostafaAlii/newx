@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend;
+use App\Http\Controllers\{Frontend,Backend};
 use App\Http\Controllers\Frontend\Cms;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +64,10 @@ Route::group(['as' => 'website.'], function () {
         Route::get('terms', [Cms\TermController::class, 'index'])->name('term');
         Route::get('privecy', [Cms\PrivacyController::class, 'index'])->name('privecy');
         Route::get('copyright', [Cms\CopyrightController::class, 'index'])->name('copyright');
+    });
+
+    Route::prefix('service')->group(function () {
+        Route::get('{service}', [Backend\ServicesController::class, 'show'])->name('all_services.show');
     });
 });
 

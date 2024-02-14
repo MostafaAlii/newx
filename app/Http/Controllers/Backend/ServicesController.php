@@ -68,4 +68,8 @@ class ServicesController extends Controller
         Session::flash('alert-class', 'alert-danger');
         return redirect()->back()->with('success', 'Delete Successfully Slider');
     }
+
+    public function show(Service $service) {
+        return $service->name;
+    }
 }

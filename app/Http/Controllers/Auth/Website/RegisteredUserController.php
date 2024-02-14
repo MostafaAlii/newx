@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth\Website;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\{User, Service};
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\{RedirectResponse,Request};
@@ -10,7 +10,8 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 class RegisteredUserController extends Controller {
     public function create(): View {
-        return view('website.auth.register');
+        $all_services = Service::latest()->get();
+        return view('website.auth.register', ['all_services' => $all_services]);
     }
 
     public function store(Request $request): RedirectResponse {

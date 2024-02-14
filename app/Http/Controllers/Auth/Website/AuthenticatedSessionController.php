@@ -9,10 +9,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Service;
 
 class AuthenticatedSessionController extends Controller {
     public function create(): View {
-        return view('website.auth.login');
+        $all_services = Service::latest()->get();
+        return view('website.auth.login', ['all_services' => $all_services]);
     }
 
     /**
